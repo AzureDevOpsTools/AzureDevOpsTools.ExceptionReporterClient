@@ -16,8 +16,8 @@
     
   </metadata>
   <files>
-    <file src="bin\Release\Kongsberg.ExceptionReporter.dll" target="lib\" />
-    <file src="bin\Release\Kongsberg.ExceptionReporter.xml" target="lib\" />
-    <file src="bin\Release\Kongsberg.ExceptionReporter.pdb" target="lib\" />
+    <file src="ExceptionReporter\bin\Release\Kongsberg.Nemo.ExceptionReporter.dll" target="lib\" />
+    <file src="ExceptionReporter\bin\Release\Kongsberg.Nemo.ExceptionReporter.xml" target="lib\" />
+    <file src="ExceptionReporter\bin\Release\Kongsberg.Nemo.ExceptionReporter.pdb" target="lib\" />
   </files>
 </package>
