@@ -1,0 +1,23 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Kongsberg.MasterFlt</id>
+    <version>1.0.0</version>
+    <title>Kongsberg.Digital.ExceptionReporter</title>
+    <authors>Kongsberg Maritime AS</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Client component to be included in application to report to the Kongsberg Digital TFS Server</description>
+    <summary>Client component to be included in application to report to the Kongsberg Digital TFS Server</summary>
+    <language>en-US</language>
+    <releaseNotes>Code fixes for code warnings</releaseNotes>
+    <dependencies>
+      <dependency id="Log4Net" version="2.0.5" />
+    </dependencies>
+    
+  </metadata>
+  <files>
+    <file src="bin\Release\Kongsberg.ExceptionReporter.dll" target="lib\" />
+    <file src="bin\Release\Kongsberg.ExceptionReporter.xml" target="lib\" />
+    <file src="bin\Release\Kongsberg.ExceptionReporter.pdb" target="lib\" />
+  </files>
+</package>

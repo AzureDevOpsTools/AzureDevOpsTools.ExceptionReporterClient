@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Kongsberg.Nemo.ExceptionReporter.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LogExceptionReports" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ReportingFormType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Inmeta.Exception.ReportUI.WinForm.ReportForm, Kongsberg.Nemo.ExceptionReporter</Value>
+    </Setting>
+    <Setting Name="UseReportingUI" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Kongsberg_Nemo_Exception_Reporter_TFSExceptionService_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://exceptions.km.kongsberg.com/web/service.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
