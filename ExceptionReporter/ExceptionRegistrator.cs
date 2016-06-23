@@ -91,7 +91,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         public static string CustomerName { get; set; }
 
         /// <summary>
-        ///     Call this to register the excpetion trapper.
+        ///     Call this to register the exception trapper.
         ///     This function should be the first function called in your application, it MUST be called before any forms are
         ///     created.
         ///     Good  practice is to call it before Application.Run().
@@ -109,6 +109,20 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
             //For nemo allways use KongsbergNemo.
             ApplicationName = "KongsbergNemo";
+        }
+
+
+        /// <summary>
+        ///     Call this to register the exception trapper when you have a diffent application name than the default "Kongsberg.Nemo"
+        ///     This function should be the first function called in your application, it MUST be called before any forms are
+        ///     created.
+        ///     Good  practice is to call it before Application.Run().
+        /// </summary>
+        public static void Register(string applicationName, bool tryContinueAfterException = true,
+            bool showExitAppWindow = true)
+        {
+            Register(tryContinueAfterException,showExitAppWindow);
+            ApplicationName = applicationName;
         }
 
         /// <summary>

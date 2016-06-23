@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Kongsberg.MasterFlt</id>
+    <id>Kongsberg.Digital.ExceptionReporter</id>
     <version>1.0.0</version>
     <title>Kongsberg.Digital.ExceptionReporter</title>
     <authors>Kongsberg Maritime AS</authors>
