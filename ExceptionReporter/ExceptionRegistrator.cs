@@ -40,11 +40,11 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 try
                 {
                     //same as NEMO, but with exception handling.
-                    WindowsIdentity currentNtUser = WindowsIdentity.GetCurrent();
+                    var currentNtUser = WindowsIdentity.GetCurrent();
                     string customer = string.IsNullOrEmpty(CustomerName) ? "" : CustomerName + "\\";
                     string user = currentNtUser != null ? currentNtUser.Name : "n/a";
 
-                    return string.Format("{0}{1}", customer, user);
+                    return $"{customer}{user}";
                 }
                 catch (SecurityException privEx)
                 {
