@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
+// by using the '*' as shown below.  In this case we have a specific version number to make the unit test happy
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.2.3.4")]
+[assembly: AssemblyFileVersion("1.2.3.5")]

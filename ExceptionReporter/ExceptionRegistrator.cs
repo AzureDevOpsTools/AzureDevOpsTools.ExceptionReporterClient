@@ -61,7 +61,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// <summary>
         ///     Get VERSION, SAME AS NEMO, but more robust.
         /// </summary>
-        internal static string Version
+        public static string Version
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 try
                 {
                     //SAME AS NEMO, but with exception handling
-                    version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                    version = Assembly.GetCallingAssembly().GetName().Version.ToString();
                 }
                 catch (Exception privEx)
                 {
@@ -136,8 +136,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         internal static bool OnException(Exception e, bool isTerminating)
         {
-            if (ExceptionReporting != null)
-                ExceptionReporting(e, EventArgs.Empty);
+            ExceptionReporting?.Invoke(e, EventArgs.Empty);
 
             bool fromSTA = true;
 
@@ -359,10 +358,10 @@ namespace Kongsberg.Nemo.ExceptionReporter
             string name = ex.GetType().Name;
 
             if (name.Contains("ParseMessageException"))
-                return string.Format("{0}\n{1}", ex.Message, ex.StackTrace ?? String.Empty);
+                return $"{ex.Message}\n{ex.StackTrace ?? String.Empty}";
 
-            return string.Format("Application: {0}\nException message: {1}\nType: {2}\n{3}",
-                Assembly.GetEntryAssembly().GetName().Name, ex.Message, ex.GetType(), ex.StackTrace ?? String.Empty);
+            return
+                $"Application: {Assembly.GetEntryAssembly().GetName().Name}\nException message: {ex.Message}\nType: {ex.GetType()}\n{ex.StackTrace ?? String.Empty}";
         }
 
         public static Exception GetMostInnerException(Exception e)
