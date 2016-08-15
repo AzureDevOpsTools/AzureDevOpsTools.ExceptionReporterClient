@@ -251,6 +251,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return _tryContinueAfterException;
         }
 
+        public static string FindVersion => Version;
+
+
         private static void LogToFile(Exception e)
         {
             var report = new TFSExceptionReport(ApplicationName, Reporter, Reporter, e, Version,
