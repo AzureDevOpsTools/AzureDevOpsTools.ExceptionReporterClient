@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Kongsberg.Nemo.ExceptionReporter;
 
 namespace Inmeta.Exception.ReportUI.WPF
 {
@@ -11,7 +12,7 @@ namespace Inmeta.Exception.ReportUI.WPF
         public ReportFormUI()
         {
             InitializeComponent();
-            this.versionTb.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.versionTb.Content = ExceptionRegistrator.Version;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

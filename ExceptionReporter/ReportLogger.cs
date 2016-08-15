@@ -125,8 +125,7 @@ namespace Inmeta.Exception.Reporter
             try
             {
                 var _log = LogManager.GetLogger(repo.Name, ReportFailedLogger);
-                if (_log != null)
-                    _log.Error("Failed to deliver TFS Exception", ex);
+                _log?.Error("Failed to deliver TFS Exception", ex);
             }
             catch
             {

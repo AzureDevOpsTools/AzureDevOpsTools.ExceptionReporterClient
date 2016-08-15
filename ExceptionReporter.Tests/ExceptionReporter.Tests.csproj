@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExceptionReporter.Tests</RootNamespace>
-    <AssemblyName>ExceptionReporter.Tests</AssemblyName>
+    <AssemblyName>Kongsberg.ExceptRep.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

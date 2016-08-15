@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Security.Principal;
@@ -70,6 +71,21 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 {
                     //SAME AS NEMO, but with exception handling
                     version = Assembly.GetCallingAssembly().GetName().Version.ToString();
+
+
+                    var callingassemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+                    var filtered = callingassemblies.Where(
+                                a => !a.FullName.Contains("ExceptionReporter") && a.FullName.Contains("Kongsberg")).ToList();
+                    var usables = filtered.Where(a => a.GetName().Version.ToString() != "1.0.0.0").ToList();
+                    if (!usables.Any())
+                        version = "1.0.0.0";
+                    else
+                    {
+                        version = usables.First().GetName().Version.ToString();
+                    }
+
+
+
                 }
                 catch (Exception privEx)
                 {
@@ -251,7 +267,10 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return _tryContinueAfterException;
         }
 
-        public static string FindVersion => Version;
+        public static string FindVersion()
+        {
+            return Version;
+        }
 
 
         private static void LogToFile(Exception e)

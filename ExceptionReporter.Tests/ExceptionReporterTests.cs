@@ -21,7 +21,7 @@ namespace ExceptionReporter.Tests
         [Test]
         public void CheckVersionThroughOtherMethod()
         {
-            var version = ExceptionRegistrator.FindVersion;
+            var version = ExceptionRegistrator.FindVersion();
             Assert.That(version, Is.EqualTo("1.2.3.4"));
         }
     }

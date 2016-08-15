@@ -22,9 +22,11 @@
             >
         </TextBox>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="btnPost" Margin="0,5,5,0" Width="60">Send</Button>
+             <Label Content="                            "/>
+            <Button Name="btnPost" Margin="0,5,5,0" Width="60"       >Send</Button>
             <Button Name="btnCancel" Margin="0,5,0,0" Width="60" Click="btnCancel_Click">Cancel</Button>
-            <TextBox Name="versionTb" MaxLines="1" IsReadOnly="True" TextAlignment="Right" HorizontalAlignment="Right"  />
+            <Label Content="                            "/>
+            <Label x:Name="versionTb"  HorizontalAlignment="Right"  />
         </StackPanel>
     </Grid>
 </Window>
