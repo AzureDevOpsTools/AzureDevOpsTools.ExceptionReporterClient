@@ -98,7 +98,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         public static void Register(bool tryContinueAfterException = true, bool showExitAppWindow = true)
         {
-            Contract.Ensures(_form != null);
+            //optimization to save CPU time
+            if (Application.Current == null)
+                new Application();
 
             _tryContinueAfterException = tryContinueAfterException;
             _showExitAppWindow = showExitAppWindow;
@@ -107,8 +109,8 @@ namespace Kongsberg.Nemo.ExceptionReporter
             _form = new ReportForm();
             _form.RegisterExceptionEvents(OnException);
 
-            //For nemo allways use KongsbergNemo.
-            ApplicationName = "KongsbergNemo";
+            //For nemo allways use K-Sim.
+            ApplicationName = "K-Sim";
         }
 
 
