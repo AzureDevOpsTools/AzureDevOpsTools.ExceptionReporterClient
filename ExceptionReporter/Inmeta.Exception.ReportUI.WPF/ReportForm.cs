@@ -17,27 +17,24 @@ namespace Inmeta.Exception.ReportUI.WPF
 
         public void RegisterExceptionEvents(Func<System.Exception, bool, bool> callback)
         {
-            //How to handle unhandled excpetions in WPF:
-            //see: http://msdn.microsoft.com/en-us/library/system.windows.application.dispatcherunhandledexception.aspx
-            //but unhandled 
-            if (Application.Current != null)
-            {
-                Application.Current.DispatcherUnhandledException +=
-                    (sender, args) =>
+            ////How to handle unhandled excpetions in WPF:
+            ////see: http://msdn.microsoft.com/en-us/library/system.windows.application.dispatcherunhandledexception.aspx
+            ////but unhandled 
+            Application.Current.DispatcherUnhandledException +=
+                (sender, args) =>
+                    {
+                        lock (this.syncRoot)
                         {
-                            lock (this.syncRoot)
-                            {
-                                //True: application will continue.
-                                //False: default unhandled exception processing
-                                args.Handled = CanBeSafelySkipped(args) || callback(args.Exception, !args.Handled);
-                            }
-                        };
-            }
+                            //True: application will continue.
+                            //False: default unhandled exception processing
+                            args.Handled = CanBeSafelySkipped(args) || callback(args.Exception, !args.Handled);
+                        }
+                    };
 
-            //catch exceptions.
+            ////catch exceptions.
             System.Windows.Forms.Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
 
-            //since WPF DispatcherUnhandledException do not hook on child thread, register with Appdomain unhandled Exceptions register with Appdomain 
+            ////since WPF DispatcherUnhandledException do not hook on child thread, register with Appdomain unhandled Exceptions register with Appdomain 
             AppDomain.CurrentDomain.UnhandledException +=
                 (sender, args) =>
                     {
@@ -47,12 +44,12 @@ namespace Inmeta.Exception.ReportUI.WPF
                             {
                                 if (Application.Current != null)
                                     Application.Current.Shutdown();
-                                else 
+                                else
                                     System.Windows.Forms.Application.Exit();
                             }
                         }
                     };
-            // some apps has it's own app domain exception registator, and the only way to check it is "try"
+            //// some apps has it's own app domain exception registator, and the only way to check it is "try"
         }
 
         /// <summary>
