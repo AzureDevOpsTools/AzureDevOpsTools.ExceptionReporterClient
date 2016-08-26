@@ -126,7 +126,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             _form.RegisterExceptionEvents(OnException);
 
             //For nemo allways use K-Sim.
-            ApplicationName = "K-Sim";
+            ApplicationName = "KongsbergNemo";
         }
 
 
