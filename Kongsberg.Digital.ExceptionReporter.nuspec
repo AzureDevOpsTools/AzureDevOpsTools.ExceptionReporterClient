@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Kongsberg.Digital.ExceptionReporter</id>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <title>Kongsberg.Digital.ExceptionReporter</title>
     <authors>Kongsberg Maritime AS</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

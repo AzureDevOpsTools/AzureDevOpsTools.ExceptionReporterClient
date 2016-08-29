@@ -114,9 +114,10 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         public static void Register(bool tryContinueAfterException = true, bool showExitAppWindow = true)
         {
+            // TODO: Optimization not working
             //optimization to save CPU time
-            if (Application.Current == null)
-                new Application();
+            //if (Application.Current == null)
+            //    new Application();
 
             _tryContinueAfterException = tryContinueAfterException;
             _showExitAppWindow = showExitAppWindow;

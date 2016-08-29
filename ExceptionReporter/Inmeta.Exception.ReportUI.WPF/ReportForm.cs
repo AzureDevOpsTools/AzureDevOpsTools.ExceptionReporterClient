@@ -20,8 +20,10 @@ namespace Inmeta.Exception.ReportUI.WPF
             ////How to handle unhandled excpetions in WPF:
             ////see: http://msdn.microsoft.com/en-us/library/system.windows.application.dispatcherunhandledexception.aspx
             ////but unhandled 
-            Application.Current.DispatcherUnhandledException +=
-                (sender, args) =>
+            if(Application.Current != null)
+            {
+                Application.Current.DispatcherUnhandledException +=
+                    (sender, args) =>
                     {
                         lock (this.syncRoot)
                         {
@@ -30,6 +32,8 @@ namespace Inmeta.Exception.ReportUI.WPF
                             args.Handled = CanBeSafelySkipped(args) || callback(args.Exception, !args.Handled);
                         }
                     };
+                
+            }
 
             ////catch exceptions.
             System.Windows.Forms.Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
