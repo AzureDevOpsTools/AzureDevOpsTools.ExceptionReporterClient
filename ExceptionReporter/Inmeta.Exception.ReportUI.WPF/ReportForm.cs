@@ -72,8 +72,7 @@ namespace Inmeta.Exception.ReportUI.WPF
         public bool ShowException(string errorText, ReportException report)
         {
             bool posted = false;
-            Window = new ReportFormUI();
-            Window.txtError.Text = errorText;
+            Window = new ReportFormUI {txtError = {Text = errorText}};
             Window.btnPost.Click += 
                 (sender, args) =>
                 {

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Inmeta.Exception.ReportUI.WPF.ReportFormUI"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        x:ClassModifier="internal" WindowStartupLocation="CenterScreen"
+        x:ClassModifier="public" WindowStartupLocation="CenterScreen"
         Title="Report Exception" Height="500" Width="700" Topmost="True">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -17,14 +17,19 @@
         </StackPanel>
         <!-- GridSplitter VerticalAlignment="Top" Height="5" HorizontalAlignment="Stretch" Grid.Row="1"/ -->
         <Label Grid.Row="2">Please fill out the steps that led to the error</Label>
-        <TextBox Name="txtDescription" Grid.Row="3" TextWrapping="Wrap" MinLines="5"
-                 AcceptsReturn="True" VerticalScrollBarVisibility="Visible"
+        <StackPanel Grid.Row="3"  Orientation="Horizontal">
+        <TextBox Name="txtDescription"  TextWrapping="Wrap" MinLines="5" MinWidth="350"
+                 AcceptsReturn="True" VerticalScrollBarVisibility="Visible" TextChanged="DescriptionChanged"
             >
         </TextBox>
+            <Label Name="txtGuideLines" FontStyle="Italic" BorderThickness="2"/>
+        </StackPanel>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-             <Label Content="                            "/>
+            <Label Width="400">
+                <CheckBox x:Name="chkNoDescription" Content="Accept to send without description" ToolTip="We would prefer a description, but sending without at least give us a stacktrace" Checked="ChkNoDescription_OnClick" Unchecked="ChkNoDescription_OnClick"/>
+            </Label>
             <Button Name="btnPost" Margin="0,5,5,0" Width="60"       >Send</Button>
-            <Button Name="btnCancel" Margin="0,5,0,0" Width="60" Click="btnCancel_Click">Cancel</Button>
+            <Button x:Name="btnCancel" Margin="0,5,0,0" Width="60" Click="btnCancel_Click" Content="Cancel"/>
             <Label Content="                            "/>
             <Label x:Name="versionTb"  HorizontalAlignment="Right"  />
         </StackPanel>
