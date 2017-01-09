@@ -26,7 +26,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// <param name="ex"></param>
         /// <param name="version"></param>
         /// <param name="description">Step to reproduce the error.</param>
-        public TFSExceptionReport(string applicationName, string reporter, string username, System.Exception ex, string version, string description)
+        public TFSExceptionReport(string applicationName, string reporter, string username, Exception ex, string version, string description)
         {
             //ensure contracts.
             Contract.Requires(String.IsNullOrEmpty(applicationName));
@@ -40,11 +40,11 @@ namespace Kongsberg.Nemo.ExceptionReporter
             Contract.Ensures(String.IsNullOrEmpty(ExceptionEntity.Reporter));
             Contract.Ensures(String.IsNullOrEmpty(ExceptionEntity.Username));
 
-            string stackTrace = ExceptionRegistrator.CreateExceptionText(ex);
-            string title = GetTitle(ex);
-            string message = title;
-            string exceptionClass = GetExceptionClass(ex);
-            string exceptionMethod = GetExceptionMethod(ex);
+            var stackTrace = ExceptionRegistrator.CreateExceptionText(ex);
+            var title = GetTitle(ex);
+            var message = title;
+            var exceptionClass = GetExceptionClass(ex);
+            var exceptionMethod = GetExceptionMethod(ex);
 
             ExceptionEntity = new ExceptionEntity
                                    {
@@ -64,7 +64,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
         }
 
-        private static string GetExceptionMethod(System.Exception ex)
+        private static string GetExceptionMethod(Exception ex)
         {
             string exceptionMethod;
             try
@@ -79,7 +79,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return exceptionMethod;
         }
 
-        private static string GetExceptionClass(System.Exception ex)
+        private static string GetExceptionClass(Exception ex)
         {
             string exceptionClass;
             try
@@ -95,9 +95,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return exceptionClass;
         }
 
-        private static string GetTitle(System.Exception ex)
+        private static string GetTitle(Exception ex)
         {
-            System.Exception innerEx = ExceptionRegistrator.GetMostInnerException(ex);
+            var innerEx = ExceptionRegistrator.GetMostInnerException(ex);
             var splittedTitle = innerEx.StackTrace.Split(
                 new[] { " in " }, StringSplitOptions.RemoveEmptyEntries).First().Trim().Split(
                     new[] { " at " }, StringSplitOptions.RemoveEmptyEntries);
@@ -125,7 +125,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         /// <returns>If Post fails to deliver the report, the reason is represented in the returning exception. If success return value is null</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        internal System.Exception Post()
+        internal Exception Post()
         {
             try
             {
@@ -144,7 +144,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                     client.AddNewApplicationException(ExceptionEntity);
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 ReportLogger.LogExceptionsDuringDelivery(e);
 

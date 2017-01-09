@@ -2,14 +2,14 @@
 <package>
   <metadata>
     <id>Kongsberg.Digital.ExceptionReporter</id>
-    <version>1.2.5</version>
+    <version>1.3.0</version>
     <title>Kongsberg.Digital.ExceptionReporter</title>
     <authors>Kongsberg Maritime AS</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Client component to be included in application to report to the Kongsberg Digital TFS Server</description>
     <summary>Client component to be included in application to report to the Kongsberg Digital TFS Server</summary>
     <language>en-US</language>
-    <releaseNotes>Code fixes for code warnings</releaseNotes>
+    <releaseNotes>Added request to user to add description</releaseNotes>
     <dependencies>
       <dependency id="Log4Net" version="2.0.5" />
     </dependencies>

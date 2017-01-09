@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 
 namespace Inmeta.Exception.Common
 {
@@ -26,7 +25,7 @@ namespace Inmeta.Exception.Common
 
             //empty string is not a valid TFSString type. 
             //Provide at least one '_'. Cannot set to ' ' since space is trimmed away by TFS, resulting in validation error 
-            var temp = (msg ?? String.Empty).Length == 0 ? "_" : msg;
+            var temp = (msg ?? string.Empty).Length == 0 ? "_" : msg;
             return (temp.Length > 255 ? temp.Substring(0, 255) : temp).Replace('\n', ' ').Replace('\r', ' ').Replace('\t', ' ');
         }
     }

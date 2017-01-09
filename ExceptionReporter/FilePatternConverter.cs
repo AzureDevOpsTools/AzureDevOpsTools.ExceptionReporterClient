@@ -7,7 +7,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
 {
     public class FilePatternConverter : PatternConverter
     {
-        override protected void Convert(TextWriter writer, object state)
+        protected override void Convert(TextWriter writer, object state)
         {
             writer.Write(Path);
         }
@@ -16,16 +16,16 @@ namespace Kongsberg.Nemo.ExceptionReporter
         {
             get
             {
-                RegistryKey localMachine = Registry.LocalMachine;
+                var localMachine = Registry.LocalMachine;
                 const string keypath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders";
              
                 //default location to 
                 var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 
                 //override with Registry settings if available.
-                RegistryKey key = localMachine.OpenSubKey(keypath);
+                var key = localMachine.OpenSubKey(keypath);
 
-                if (key != null && key.GetValue("Common AppData") != null)
+                if (key?.GetValue("Common AppData") != null)
                     path = key.GetValue("Common AppData").ToString();
                 
                 //append Kongsberg\ExceptionReporter to seperate from other logs.

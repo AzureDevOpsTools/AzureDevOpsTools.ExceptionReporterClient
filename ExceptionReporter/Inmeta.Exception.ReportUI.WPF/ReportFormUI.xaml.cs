@@ -33,11 +33,21 @@ namespace Inmeta.Exception.ReportUI.WPF
         }
 
 
-        private const string GuideLines = "Please help the developers to reproduce and fix this error!\r\n\r\nThe following information is required:\r\n- which action causes this error\r\n- which vessel(s) are inserted into simulation\r\n- which pages or tabs are opened now\r\nThank you!";
+        private const string GuideLines = "Please help the developers to reproduce and fix this error!\r\n\r\nThe following information is required:\r\n- which action caused this error\r\n- which vessel(s) are inserted into simulation\r\n- which pages or tabs are open now\r\nThank you!";
 
         private void DescriptionChanged(object sender, TextChangedEventArgs e)
         {
             EnableDisableSend();
+            if (txtDescription.Text.Length > 0)
+            {
+                if (chkNoDescription.IsChecked.HasValue && chkNoDescription.IsChecked.Value)
+                {
+                    chkNoDescription.IsChecked = false;
+                }
+                chkNoDescription.IsEnabled = false;
+            }
+            else if (!chkNoDescription.IsEnabled)
+                chkNoDescription.IsEnabled = true;
         }
 
 

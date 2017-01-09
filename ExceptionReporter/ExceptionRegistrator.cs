@@ -27,6 +27,12 @@ namespace Kongsberg.Nemo.ExceptionReporter
         private static readonly object _syncObject = new object();
 
         /// <summary>
+        /// Can be set to true to disable posting to the production TFS server.
+        /// Useful if used for testing.
+        /// </summary>
+        public static bool DoNotSend { get; set; } 
+
+        /// <summary>
         ///     The application name.
         /// </summary>
         internal static string ApplicationName { get; set; }
@@ -164,7 +170,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             {
                 if (_previousException != null && e != null && _previousException.ToString() == e.ToString())
                 {
-                    ReportLogger.LogInfo(new ArgumentException("Trying to report on the same excpetion.", e).ToString());
+                    ReportLogger.LogInfo(new ArgumentException("Trying to report on the same exception.", e).ToString());
                     //same as previous
                     return _tryContinueAfterException;
                 }
@@ -313,7 +319,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 ReportLogger.LogToFile(report);
 
                 //post to service. 
-                Exception result = report.Post();
+                var result = (!DoNotSend) ? report.Post() : null;
 
                 ReportLogger.LogInfo("Result posted");
                 //if error show to user.
