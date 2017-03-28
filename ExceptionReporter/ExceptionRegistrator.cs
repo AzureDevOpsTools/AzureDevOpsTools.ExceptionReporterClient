@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +10,6 @@ using System.Threading;
 using System.Windows;
 using Inmeta.Exception.Reporter;
 using Inmeta.Exception.ReportUI.WPF;
-using Kongsberg.Nemo.ExceptionReporter.Properties;
 using Osiris.Exception.Reporter;
 
 namespace Kongsberg.Nemo.ExceptionReporter
@@ -25,6 +23,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         internal static bool _showExitAppWindow = true;
         internal static ReportForm _form;
         private static readonly object _syncObject = new object();
+        private static bool useReportGUI;
 
         /// <summary>
         /// Can be set to true to disable posting to the production TFS server.
@@ -76,7 +75,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 try
                 {
                     //SAME AS NEMO, but with exception handling
-                    version = Assembly.GetCallingAssembly().GetName().Version.ToString();
+                    //version = Assembly.GetCallingAssembly().GetName().Version.ToString();
 
 
                     var callingassemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
@@ -89,9 +88,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
                     {
                         version = usables.First().GetName().Version.ToString();
                     }
-
-
-
                 }
                 catch (Exception privEx)
                 {
@@ -120,17 +116,32 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         public static void Register(bool tryContinueAfterException = true, bool showExitAppWindow = true)
         {
-            // TODO: Optimization not working
-            //optimization to save CPU time
-            //if (Application.Current == null)
-            //    new Application();
-
             _tryContinueAfterException = tryContinueAfterException;
             _showExitAppWindow = showExitAppWindow;
 
             //get the registered form type.
             _form = new ReportForm();
             _form.RegisterExceptionEvents(OnException);
+
+            //For nemo allways use K-Sim.
+            ApplicationName = "KongsbergNemo";
+        }
+
+        /// <summary>
+        ///     Use this method for better performance results in pure Windows forms application
+        ///     Call this to register the exception trapper.
+        ///     This function should be the first function called in your application, it MUST be called before any forms are
+        ///     created.
+        ///     Good  practice is to call it before Application.Run().
+        /// </summary>
+        public static void RegisterWinFormsApplication(bool tryContinueAfterException = true, bool showExitAppWindow = true)
+        {
+            _tryContinueAfterException = tryContinueAfterException;
+            _showExitAppWindow = showExitAppWindow;
+
+            //get the registered form type.
+            _form = new ReportForm();
+            _form.RegisterWindowsFormsExceptionEvents(OnException);
 
             //For nemo allways use K-Sim.
             ApplicationName = "KongsbergNemo";
@@ -155,7 +166,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// <param name="use"></param>
         public static void UseReportGUI(bool use)
         {
-            Settings.Default.SetUseReportingUI = use;
+            useReportGUI = use;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -187,7 +198,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             {
 #if (RELEASE)
     //use ExceptionRegistrator.UseReportGUI to control if UI is to be used or not.
-                if (!Kongsberg.Nemo.ExceptionReporter.Properties.Settings.Default.UseReportingUI)
+                if (!useReportGUI)
                 {
                     ReportExceptionWithNoGUI(Reporter, Version, ApplicationName, e);
                     return _tryContinueAfterException;
@@ -362,8 +373,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         internal static string CreateExceptionText(Exception e)
         {
-            Contract.Requires(e != null);
-
             var errorText = new StringBuilder();
             errorText.Append(FormStringFromException(e));
 

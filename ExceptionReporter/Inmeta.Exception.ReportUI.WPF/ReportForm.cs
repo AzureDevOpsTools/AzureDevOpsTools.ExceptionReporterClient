@@ -35,6 +35,11 @@ namespace Inmeta.Exception.ReportUI.WPF
                 
             }
 
+            RegisterWindowsFormsExceptionEvents(callback);
+        }
+
+        public void RegisterWindowsFormsExceptionEvents(Func<System.Exception, bool, bool> callback)
+        {
             ////catch exceptions.
             System.Windows.Forms.Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
 
@@ -46,10 +51,7 @@ namespace Inmeta.Exception.ReportUI.WPF
                         {
                             if (!callback(args.ExceptionObject as System.Exception, args.IsTerminating))
                             {
-                                if (Application.Current != null)
-                                    Application.Current.Shutdown();
-                                else
-                                    System.Windows.Forms.Application.Exit();
+                                Environment.Exit(0);
                             }
                         }
                     };
