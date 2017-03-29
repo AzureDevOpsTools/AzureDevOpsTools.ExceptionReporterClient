@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -51,7 +52,17 @@ namespace Inmeta.Exception.ReportUI.WPF
                         {
                             if (!callback(args.ExceptionObject as System.Exception, args.IsTerminating))
                             {
-                                Environment.Exit(0);
+                                //tried difefrent approaches. So far kill seems to do the best job - no error message from windows is shown
+                                //Environment.Exit seems to work in 99% of the cases but there are situations where a process is hanging
+                                Process.GetCurrentProcess().Kill();
+
+                                //if (Application.Current != null)
+                                //    Application.Current.Shutdown();
+                                //else
+                                //    System.Windows.Forms.Application.Exit();
+
+                                //System.Windows.Forms.Application.Exit();
+                                //Environment.Exit(0);
                             }
                         }
                     };

@@ -201,7 +201,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 if (!useReportGUI)
                 {
                     ReportExceptionWithNoGUI(Reporter, Version, ApplicationName, e);
-                    return _tryContinueAfterException;
+                    return false;
                 }
 #endif
                 // XAML issue with MTA threads.
