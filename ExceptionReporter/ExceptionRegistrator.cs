@@ -196,8 +196,8 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
             try
             {
-#if (RELEASE)
-    //use ExceptionRegistrator.UseReportGUI to control if UI is to be used or not.
+#if (!DEBUG)
+                //use ExceptionRegistrator.UseReportGUI to control if UI is to be used or not.
                 if (!useReportGUI)
                 {
                     ReportExceptionWithNoGUI(Reporter, Version, ApplicationName, e);
@@ -286,6 +286,39 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
             return _tryContinueAfterException;
         }
+#if (!DEBUG)
+        /// <summary>
+        /// report W/O GUI. 
+        /// </summary>
+        /// <param name="currentNtUser"></param>
+        /// <param name="version"></param>
+        /// <param name="applicationName"></param>
+        /// <param name="e"></param>
+        internal static void ReportExceptionWithNoGUI(string currentNtUser, string version, string applicationName, Exception e)
+        {
+            try
+            {
+                //ignore result since we are not using any UI to provide user feedback.
+                //any errors will be logged by the Post function.
+                var report =
+                    new TFSExceptionReport(
+                        applicationName,
+                        currentNtUser,
+                        currentNtUser, e,
+                        version,
+                        "Exception reported w/o description");
+
+                ReportLogger.LogToFile(report);
+
+                //same as NEMO
+                report.Post();
+            }
+            catch (Exception ex)
+            {
+                ReportLogger.LogExceptionsDuringDelivery(new Exception("Failed to deliver exception (no GUI)", ex));
+            }
+        }
+#endif
 
         public static string FindVersion()
         {

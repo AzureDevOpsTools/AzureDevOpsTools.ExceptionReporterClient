@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Kongsberg.Digital.ExceptionReporter</id>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <title>Kongsberg.Digital.ExceptionReporter</title>
     <authors>Kongsberg Maritime AS</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,10 +10,6 @@
     <summary>Client component to be included in application to report to the Kongsberg Digital TFS Server</summary>
     <language>en-US</language>
     <releaseNotes>Added request to user to add description</releaseNotes>
-    <dependencies>
-      <dependency id="Log4Net" version="2.0.8" />
-    </dependencies>
-    
   </metadata>
   <files>
     <file src="ExceptionReporter\bin\Release\Kongsberg.Nemo.ExceptionReporter.dll" target="lib\" />
