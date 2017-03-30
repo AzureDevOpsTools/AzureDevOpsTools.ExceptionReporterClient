@@ -23,7 +23,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         internal static bool _showExitAppWindow = true;
         internal static ReportForm _form;
         private static readonly object _syncObject = new object();
-        private static bool useReportGUI;
+        private static bool useReportGUI = true;
 
         /// <summary>
         /// Can be set to true to disable posting to the production TFS server.
@@ -196,14 +196,12 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
             try
             {
-#if (!DEBUG)
                 //use ExceptionRegistrator.UseReportGUI to control if UI is to be used or not.
                 if (!useReportGUI)
                 {
                     ReportExceptionWithNoGUI(Reporter, Version, ApplicationName, e);
                     return false;
                 }
-#endif
                 // XAML issue with MTA threads.
                 if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
                 {
@@ -286,7 +284,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
             return _tryContinueAfterException;
         }
-#if (!DEBUG)
+
         /// <summary>
         /// report W/O GUI. 
         /// </summary>
@@ -318,7 +316,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 ReportLogger.LogExceptionsDuringDelivery(new Exception("Failed to deliver exception (no GUI)", ex));
             }
         }
-#endif
 
         public static string FindVersion()
         {
