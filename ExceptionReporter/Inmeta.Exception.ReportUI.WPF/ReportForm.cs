@@ -50,7 +50,7 @@ namespace Inmeta.Exception.ReportUI.WPF
                     {
                         lock (this.syncRoot)
                         {
-                            if (!callback(args.ExceptionObject as System.Exception, args.IsTerminating))
+                            if (!callback(args.ExceptionObject as System.Exception, args.IsTerminating) || args.IsTerminating)
                             {
                                 //tried difefrent approaches. So far kill seems to do the best job - no error message from windows is shown
                                 //Environment.Exit seems to work in 99% of the cases but there are situations where a process is hanging
