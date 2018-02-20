@@ -11,7 +11,7 @@
     <language>en-US</language>
     <releaseNotes>Added request to user to add description</releaseNotes>
     <dependencies>
-      <dependency id="Log4Net" version="2.0.8" />
+      <dependency id="Log4Net" />
     </dependencies>
   </metadata>
   <files>
