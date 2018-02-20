@@ -2,13 +2,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{B16FC73E-2654-4157-A730-CA635BC3C421}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{97A2E15B-3F57-464E-BD22-D14B14D1EF76}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		default.runsettings = default.runsettings
 		Kongsberg.Digital.ExceptionReporter.nuspec = Kongsberg.Digital.ExceptionReporter.nuspec
-		.nuget\nuget.config = .nuget\nuget.config
 		Pack.cmd = Pack.cmd
 		readme.md = readme.md
 		Upload.cmd = Upload.cmd

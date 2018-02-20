@@ -1,0 +1,10 @@
+RESTRICTION: == net461
+NUGET
+  remote: http://nugetsim/nugetsim/nuget
+    Kongsberg.Digital.ExceptionReporter (1.3.0)
+      log4net (>= 2.0.5)
+  remote: http://www.nuget.org/api/v2
+    log4net (2.0.8)
+  remote: https://api.nuget.org/v3/index.json
+    NUnit (3.5)
+    NUnit3TestAdapter (3.6)
