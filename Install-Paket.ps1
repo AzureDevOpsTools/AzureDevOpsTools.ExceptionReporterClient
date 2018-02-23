@@ -3,8 +3,10 @@ param(
     $Path
 )
 
-$paketExecutable = "paket.bootstrapper.exe"
-Write-Host "$paketExecutable will be downloaded and renamed to paket.exe. This will enable `"magic mode`" see: https://fsprojects.github.io/Paket/bootstrapper.html#Magic-mode for more details."
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+$paketExecutable = "paket.exe"
+Write-Host "$paketExecutable will be downloaded."
 
 
 
