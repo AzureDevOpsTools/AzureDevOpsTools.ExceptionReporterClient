@@ -1,0 +1,19 @@
+{
+  "PreRequisites": [
+    {
+      "Name": "DotNetFramework",
+      "Version": "4.6.2"
+    },
+  ],
+  "Builds": [
+    {
+      "Solution": "ExceptionReporter.sln"
+    }
+  ],
+    "FileVersion": 
+    {
+      "ProductName": "ExceptionReporter",
+      "Description": "Unhandled exception handler, reporting to the TFSExceptionService",
+      "CopyrightYearFrom": 2018
+    }
+}
