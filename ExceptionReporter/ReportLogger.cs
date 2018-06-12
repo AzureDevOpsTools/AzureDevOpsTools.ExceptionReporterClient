@@ -262,7 +262,8 @@ namespace Inmeta.Exception.Reporter
             var ind = new Indexes();
             var searchTerm = "Application: ";
             ind.Start = stacktrace.IndexOf(searchTerm, 0, StringComparison.InvariantCulture) + searchTerm.Length;
-            ind.Stop = stacktrace.IndexOf("\n", ind.Start, StringComparison.InvariantCulture);
+            ind.Stop = Math.Min(stacktrace.IndexOf("\n", ind.Start, StringComparison.InvariantCulture),
+                stacktrace.IndexOf("\r", ind.Start, StringComparison.InvariantCulture));
             Appname = stacktrace.Substring(ind.Start, ind.Length);
         }
     }
