@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build.json = build.json
 		build.ps1 = build.ps1
 		default.runsettings = default.runsettings
+		nuspecs\Kongsberg.Digital.ExceptionReporter.nuspec = nuspecs\Kongsberg.Digital.ExceptionReporter.nuspec
 		Pack.cmd = Pack.cmd
 		readme.md = readme.md
 		Upload.cmd = Upload.cmd
