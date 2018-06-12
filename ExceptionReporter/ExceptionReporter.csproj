@@ -82,6 +82,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>C:\Users\Terje\Source\Repos\KmSim\ExceptionReporter\KongsbergCSharpRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\Kongsberg.Nemo.ExceptionReporter.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>

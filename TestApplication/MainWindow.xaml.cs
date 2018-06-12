@@ -17,7 +17,9 @@ namespace TestApplication
 
         private void Bang(object sender, RoutedEventArgs e)
         {
-            throw new DeliberateException();
+            
+            var ex = new DeliberateException();
+            throw ex;
         }
     }
 

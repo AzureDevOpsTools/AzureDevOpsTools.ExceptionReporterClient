@@ -9,12 +9,15 @@ using log4net;
 using log4net.Repository.Hierarchy;
 using System.Xml;
 using log4net.Config;
-using Osiris.Exception.Reporter;
 using System.Reflection;
 using Kongsberg.Nemo.ExceptionReporter.Properties;
 
 namespace Inmeta.Exception.Reporter
 {
+    /// <summary>
+    /// The setup below will use the FilePatternConverter to find the location to store the files.  This will be the %ProgramData% folder for the current machine
+    /// and we add Kongsberg/ExceptionReporter to that path. 
+    /// </summary>
     internal static class ReportLogger
     {
         private const string XMLReporterLogger = "XMLExceptionReporter";
@@ -37,7 +40,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <maximumFileSize value=""1000KB"" />" + Environment.NewLine +
                                     @"      <maxSizeRollBackups value=""5"" />" + Environment.NewLine +
                                     @"      <layout type=""log4net.Layout.PatternLayout"">" + Environment.NewLine +
-                                    @"        <conversionPattern value=""%message%newline"" />        " + Environment.NewLine +
+                                    @"        <conversionPattern value=""%date %message%newline"" />        " + Environment.NewLine +
                                     @"      </layout>" + Environment.NewLine +
                                     @"    </appender>" + Environment.NewLine +
                                     @"    <appender name=""ExceptionReporterRollingFileAppender"" " +
@@ -54,7 +57,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <maximumFileSize value=""500KB"" />" + Environment.NewLine +
                                     @"      <maxSizeRollBackups value=""4"" />" + Environment.NewLine +
                                     @"      <layout type=""log4net.Layout.PatternLayout"">" + Environment.NewLine +
-                                    @"        <conversionPattern value=""%date [%thread] %-5level %logger - %message%newline"" />        " + Environment.NewLine +
+                                    @"        <conversionPattern value=""%date Thread-Id [%thread] %-5level %logger - %message%newline"" />        " + Environment.NewLine +
                                     @"      </layout>" + Environment.NewLine +
                                     @"    </appender>" + Environment.NewLine +
                                     @"    <appender name=""ExceptionReporterFailedReportRollingFileAppender"" " +
@@ -177,7 +180,7 @@ namespace Inmeta.Exception.Reporter
             try
             {
                 //Ge{t exception logger
-                var _log = LogManager.GetLogger(repo.Name, XMLReporterLogger);
+                var log = LogManager.GetLogger(repo.Name, XMLReporterLogger);
 
                 var builder = new StringBuilder();
                 using (var strWrt = new StringWriter(builder))
@@ -195,13 +198,12 @@ namespace Inmeta.Exception.Reporter
                             ser.Serialize(writer, ex.ExceptionEntity);
                         }
                     }
-                    finally 
+                    finally
                     {
-                        if (mem != null)
-                            mem.Dispose();
+                        mem?.Dispose();
                     }
                     
-                    _log.Info(outStr.ToString());
+                    log.Info(outStr.ToString());
                 }
             }
             catch

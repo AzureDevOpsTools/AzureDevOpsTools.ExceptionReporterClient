@@ -5,13 +5,22 @@ using Microsoft.Win32;
 
 namespace Kongsberg.Nemo.ExceptionReporter
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Specialized converter for Log4Net for Kongsberg storage.
+    /// This class is loaded by reflection in log4net, and stated in the xml config in ReportLogger
+    /// </summary>
+    // ReSharper disable once UnusedMember.Global
     public class FilePatternConverter : PatternConverter
     {
+        /// <inheritdoc />
         protected override void Convert(TextWriter writer, object state)
         {
             writer.Write(Path);
         }
-
+        /// <summary>
+        /// Location for storage of log files
+        /// </summary>
         public static string Path
         {
             get
