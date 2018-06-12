@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,9 @@ using Osiris.Exception.Reporter;
 
 namespace Kongsberg.Nemo.ExceptionReporter
 {
+    /// <summary>
+    /// Use to enable registration of handler
+    /// </summary>
     public static class ExceptionRegistrator
     {
         //store previous exception to avoid recursive reporting
@@ -106,6 +110,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         private static Exception TheException { get; set; }
 
+        /// <summary>
+        /// Customers name
+        /// </summary>
         public static string CustomerName { get; set; }
 
         /// <summary>
@@ -153,6 +160,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         ///     This function should be the first function called in your application, it MUST be called before any forms are
         ///     created.
         ///     Good  practice is to call it before Application.Run().
+        ///     Application Name should uniquely define your application, and will also be used as the folder name.  Avoid spaces and special characters
         /// </summary>
         public static void Register(string applicationName, bool tryContinueAfterException = true,
             bool showExitAppWindow = true)
@@ -162,6 +170,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         }
 
         /// <summary>
+        /// Use normally to suppress use of GUI for services and other non-UI applications
         /// </summary>
         /// <param name="use"></param>
         public static void UseReportGUI(bool use)
@@ -173,7 +182,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         internal static bool OnException(Exception e, bool isTerminating)
         {
             ExceptionReporting?.Invoke(e, EventArgs.Empty);
-
+            var proc = Process.GetCurrentProcess();
             bool fromSTA = true;
 
             //avoid recursive reporting when IsTerminating is true, since we have registered both Main Form and AppDomain with unhandled exceptions

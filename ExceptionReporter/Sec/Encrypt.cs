@@ -9,6 +9,11 @@ namespace Kongsberg.Nemo.ExceptionReporter.Sec
         private const string Key = "";
         private readonly byte[] vector = new byte[] { 27, 9, 45, 27, 0, 72, 171, 54 };
 
+        /// <summary>
+        /// Encrypt with TripleDES and MD5
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns></returns>
         public string Encrypt(string inputString)
         {
             var buffer = Encoding.ASCII.GetBytes(inputString);
@@ -22,6 +27,11 @@ namespace Kongsberg.Nemo.ExceptionReporter.Sec
             }
         }
 
+        /// <summary>
+        /// Decrypt MD5 and TripleDES
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns></returns>
         public string Decrypt(string inputString)
         {
             var buffer = Convert.FromBase64String(inputString);

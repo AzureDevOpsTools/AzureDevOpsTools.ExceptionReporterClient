@@ -4,7 +4,7 @@
     <id>Kongsberg.Digital.ExceptionReporter</id>
     <version>1.4.8</version>
     <title>Kongsberg.Digital.ExceptionReporter</title>
-    <authors>Kongsberg Maritime AS</authors>
+    <authors>Kongsberg Digital AS</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Client component to be included in application to report to the Kongsberg Digital TFS Server</description>
     <summary>Client component to be included in application to report to the Kongsberg Digital TFS Server</summary>
