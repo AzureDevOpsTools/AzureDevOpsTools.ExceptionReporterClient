@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <maximumFileSize value=""1000KB"" />" + Environment.NewLine +
                                     @"      <maxSizeRollBackups value=""5"" />" + Environment.NewLine +
                                     @"      <layout type=""log4net.Layout.PatternLayout"">" + Environment.NewLine +
-                                    @"        <conversionPattern value=""%date %message%newline"" />        " + Environment.NewLine +
+                                    @"        <conversionPattern value=""%message%newline"" />        " + Environment.NewLine +
                                     @"      </layout>" + Environment.NewLine +
                                     @"    </appender>" + Environment.NewLine +
                                     @"    <appender name=""ExceptionReporterRollingFileAppender"" " +
@@ -74,7 +75,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <maximumFileSize value=""500KB"" />" + Environment.NewLine +
                                     @"      <maxSizeRollBackups value=""4"" />" + Environment.NewLine +
                                     @"      <layout type=""log4net.Layout.PatternLayout"">" + Environment.NewLine +
-                                    @"        <conversionPattern value=""%date [%thread] %-5level %logger - %message%newline"" />" + Environment.NewLine +
+                                    @"        <conversionPattern value=""%date Thread-Id [%thread] %-5level %logger - %message%newline"" />" + Environment.NewLine +
                                     @"      </layout>" + Environment.NewLine +
                                     @"    </appender>" + Environment.NewLine +
                                     Environment.NewLine +
@@ -145,6 +146,7 @@ namespace Inmeta.Exception.Reporter
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void LogToFile(TFSExceptionReport ex)
         {
+            var now = DateTime.Now;
             try
             {
                 //Get exception logger
@@ -158,52 +160,14 @@ namespace Inmeta.Exception.Reporter
                 // ReSharper restore PossibleNullReferenceException
 
                 if (_log != null && Settings.Default.LogExceptionReports)
-                    _log.Info(exEnt.GetType().
-                              GetProperties().Select(
-                                  (prop) =>
-                                  prop.Name + " = " +
-                                  (prop.GetValue(exEnt, BindingFlags.Default, null, null, null) ?? "NO VALUE").ToString())
-                              .Aggregate((x, y) => x + System.Environment.NewLine + y));
-            }
-            catch
-            {
-                //No more falback solutions. 
-                //need to catch to avoid circular exception
-            }
-    
-            LogToFileAsXML(ex);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void LogToFileAsXML(TFSExceptionReport ex)
-        {
-            try
-            {
-                //Ge{t exception logger
-                var log = LogManager.GetLogger(repo.Name, XMLReporterLogger);
-
-                var builder = new StringBuilder();
-                using (var strWrt = new StringWriter(builder))
                 {
-                    var ser = new XmlSerializer(typeof (ExceptionEntity));
-                    var outStr = new StringBuilder();
-                    StringWriter mem = null;
-                    try
-                    {
-                        mem = new StringWriter(outStr);
-                        using (var writer = new XmlTextWriter(mem))
-                        {
-                            mem = null;
-                            writer.Formatting = Formatting.Indented;
-                            ser.Serialize(writer, ex.ExceptionEntity);
-                        }
-                    }
-                    finally
-                    {
-                        mem?.Dispose();
-                    }
-                    
-                    log.Info(outStr.ToString());
+                    var txt = exEnt.GetType().GetProperties().Select(
+                            (prop) =>
+                                prop.Name + " = " +
+                                (prop.GetValue(exEnt, BindingFlags.Default, null, null, null) ?? "NO VALUE").ToString())
+                        .Aggregate((x, y) => x + System.Environment.NewLine + y);
+                    _log.Info(txt);
+                    StoreAsFile(txt, "log", ex.ExceptionEntity.StackTrace,now);
                 }
             }
             catch
@@ -211,7 +175,60 @@ namespace Inmeta.Exception.Reporter
                 //No more falback solutions. 
                 //need to catch to avoid circular exception
             }
+            LogToFileAsXML(ex,now);
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void LogToFileAsXML(TFSExceptionReport ex, DateTime now)
+        {
+            try
+            {
+                //Get exception logger
+                var log = LogManager.GetLogger(repo.Name, XMLReporterLogger);
+                ex.ExceptionEntity.Comment =
+                    $"{now.ToString("G", CultureInfo.InvariantCulture)}: {ex.ExceptionEntity.Comment}";
+                var ser = new XmlSerializer(typeof(ExceptionEntity));
+                var outStr = new StringBuilder();
+                StringWriter mem = null;
+                try
+                {
+                    mem = new StringWriter(outStr);
+                    using (var writer = new XmlTextWriter(mem))
+                    {
+                        mem = null;
+                        writer.Formatting = Formatting.Indented;
+                        ser.Serialize(writer, ex.ExceptionEntity);
+                    }
+                }
+                finally
+                {
+                    mem?.Dispose();
+                }
+
+                log.Info(outStr.ToString());
+                StoreAsFile(outStr.ToString(), "xml", ex.ExceptionEntity.StackTrace,now);
+            }
+            catch
+            {
+                //No more falback solutions. 
+                //need to catch to avoid circular exception
+            }
+        }
+
+        private static void StoreAsFile(string toString, string xml, string exceptionEntityStackTrace, DateTime now)
+        {
+            var appname = new ExtractAppName(exceptionEntityStackTrace).Appname;
+            var culture = CultureInfo.CreateSpecificCulture("de-DE");
+            var datestring = now.ToString("s", culture).Replace(":","-");
+            var path = Path.Combine(FilePatternConverter.Path, appname, datestring);
+            Directory.CreateDirectory(path);
+            var filepath = Path.Combine(path, "XMLExceptionReportLog." + xml);
+            File.WriteAllText(filepath,toString);
+
+        }
+
+
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         internal static void LogInfo(string p)
@@ -223,10 +240,31 @@ namespace Inmeta.Exception.Reporter
             }
             catch
             {
-                //No more falback solutions. 
+                //No more fallback solutions. 
                 //need to catch to avoid circular exception
             }
-            
+
         }
     }
+
+    public class Indexes
+    {
+        public int Start { get; set; }
+        public int Stop { get; set; }
+        public int Length => Stop - Start;
+    }
+
+    public class ExtractAppName
+    {
+        public string Appname { get; set; }
+        public ExtractAppName(string stacktrace)
+        {
+            var ind = new Indexes();
+            var searchTerm = "Application: ";
+            ind.Start = stacktrace.IndexOf(searchTerm, 0, StringComparison.InvariantCulture) + searchTerm.Length;
+            ind.Stop = stacktrace.IndexOf("\n", ind.Start, StringComparison.InvariantCulture);
+            Appname = stacktrace.Substring(ind.Start, ind.Length);
+        }
+    }
+
 }

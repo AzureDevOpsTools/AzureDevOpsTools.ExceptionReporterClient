@@ -160,6 +160,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         ///     This function should be the first function called in your application, it MUST be called before any forms are
         ///     created.
         ///     Good  practice is to call it before Application.Run().
+        ///     Application Name should uniquely define your application, and will also be used as the folder name.  Avoid spaces and special characters
         /// </summary>
         public static void Register(string applicationName, bool tryContinueAfterException = true,
             bool showExitAppWindow = true)

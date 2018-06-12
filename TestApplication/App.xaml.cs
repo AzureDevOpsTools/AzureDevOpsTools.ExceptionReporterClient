@@ -10,7 +10,7 @@ namespace TestApplication
     {
         public App()
         {
-            ExceptionRegistrator.Register("Testing ExceptionRegistrator");
+            ExceptionRegistrator.Register("TestingExceptionRegistrator");
             ExceptionRegistrator.DoNotSend = true;
         }
        
