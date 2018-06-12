@@ -3,9 +3,8 @@ framework: auto-detect
 source https://api.nuget.org/v3/index.json
 source http://nugetsim/nugetsim/nuget
 source http://www.nuget.org/api/v2
-source http://ptfs.partner.master.int:8080/tfs/Simulation/_packaging/Sim/nuget/v3/index.json
 
 nuget Kongsberg.Digital.ExceptionReporter ~> 1
-nuget NUnit ~> 3.5
-nuget log4net ~> 2.0.0
-nuget NUnit3TestAdapter ~> 3.6
+nuget NUnit ~> 3
+nuget log4net ~> 2
+nuget NUnit3TestAdapter ~> 3

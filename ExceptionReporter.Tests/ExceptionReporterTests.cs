@@ -1,4 +1,5 @@
-﻿using Inmeta.Exception.ReportUI.WPF;
+﻿using System.Threading;
+using Inmeta.Exception.ReportUI.WPF;
 using Kongsberg.Nemo.ExceptionReporter;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace ExceptionReporter.Tests
         }
     }
 
-    [RequiresSTA]
+    [Apartment(ApartmentState.STA)]
     [Category("UI")]
     public class TestReportFormUI
     {

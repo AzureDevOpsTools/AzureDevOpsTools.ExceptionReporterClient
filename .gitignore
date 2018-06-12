@@ -239,3 +239,4 @@ paket-files/
 .fake/
 
 .tools-packages/
+/.paket/paket.bootstrapper.exe

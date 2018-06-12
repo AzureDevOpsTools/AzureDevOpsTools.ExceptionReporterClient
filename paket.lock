@@ -3,7 +3,8 @@ NUGET
   remote: http://nugetsim/nugetsim/nuget
     Kongsberg.Digital.ExceptionReporter (1.4.8)
       log4net (>= 2.0.8)
-  remote: https://api.nuget.org/v3/index.json
+  remote: http://www.nuget.org/api/v2
     log4net (2.0.8)
+  remote: https://api.nuget.org/v3/index.json
     NUnit (3.10.1)
     NUnit3TestAdapter (3.10)
