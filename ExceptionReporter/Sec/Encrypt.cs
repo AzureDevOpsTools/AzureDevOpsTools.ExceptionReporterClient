@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace Kongsberg.Nemo.ExceptionReporter.Sec
+namespace AzureDevOpsTools.ExceptionReporter.Sec
 {
     public class Encryption
     {

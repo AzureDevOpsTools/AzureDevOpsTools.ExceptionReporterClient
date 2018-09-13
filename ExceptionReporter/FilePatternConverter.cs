@@ -3,11 +3,11 @@ using log4net.Util;
 using System.IO;
 using Microsoft.Win32;
 
-namespace Kongsberg.Nemo.ExceptionReporter
+namespace AzureDevOpsTools.ExceptionReporter
 {
     /// <inheritdoc />
     /// <summary>
-    /// Specialized converter for Log4Net for Kongsberg storage.
+    /// Specialized converter for Log4Net
     /// This class is loaded by reflection in log4net, and stated in the xml config in ReportLogger
     /// </summary>
     // ReSharper disable once UnusedMember.Global
@@ -37,8 +37,8 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 if (key?.GetValue("Common AppData") != null)
                     path = key.GetValue("Common AppData").ToString();
                 
-                //append Kongsberg\ExceptionReporter to seperate from other logs.
-                path = System.IO.Path.Combine(path, @"Kongsberg\ExceptionReporter\");
+                //append AzureDevOpsTools\ExceptionReporter to seperate from other logs.
+                path = System.IO.Path.Combine(path, @"AzureDevOpsTools\ExceptionReporter\");
                 return path;
             }
         }

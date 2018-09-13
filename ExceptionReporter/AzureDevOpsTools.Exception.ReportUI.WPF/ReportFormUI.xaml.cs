@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Kongsberg.Nemo.ExceptionReporter;
+using AzureDevOpsTools.ExceptionReporter;
 
-namespace Inmeta.Exception.ReportUI.WPF
+namespace AzureDevOpsTools.Exception.ReportUI.WPF
 {
     /// <summary>
     /// Interaction logic for ReportException.xaml

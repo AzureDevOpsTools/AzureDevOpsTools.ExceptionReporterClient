@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Kongsberg.Nemo.ExceptionReporter;
+using AzureDevOpsTools.ExceptionReporter;
 
 namespace TestApplication
 {

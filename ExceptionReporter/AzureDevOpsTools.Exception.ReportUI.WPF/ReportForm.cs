@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using Kongsberg.Nemo.ExceptionReporter.Properties;
-using Osiris.Exception.Reporter;
+using AzureDevOpsTools.ExceptionReporter.Properties;
+using AzureDevOpsTools.ExceptionReporter;
 using Application = System.Windows.Application;
 
-namespace Inmeta.Exception.ReportUI.WPF
+namespace AzureDevOpsTools.Exception.ReportUI.WPF
 {
     public class ReportForm : IReportForm
     {

@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Kongsberg.Nemo.Exception.Reporter")]
+[assembly: AssemblyTitle("AzureDevOpsTools.ExceptionReporter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Kongsberg.Nemo.Exception.Reporter")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCompany("AzureDevOpsTools")]
+[assembly: AssemblyProduct("AzureDevOpsTools.ExceptionReporter")]
+[assembly: AssemblyCopyright("Copyright © AzureDevOpsTools 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

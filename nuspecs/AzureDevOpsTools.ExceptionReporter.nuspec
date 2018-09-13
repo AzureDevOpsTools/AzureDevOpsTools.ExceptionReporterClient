@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>AzureDevOpsTools.ExceptionReporter</id>
+    <version>1.0.0</version>
+    <title>AzureDevOpsTools.ExceptionReporter</title>
+    <authors>AzureDevOpsTools</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>TBD</description>
+    <summary>TBD</summary>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="Log4Net" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ExceptionReporter\bin\Release\AzureDevOpsTools.ExceptionReporter.dll" target="lib\" />
+    <file src="ExceptionReporter\bin\Release\AzureDevOpsTools.ExceptionReporter.xml" target="lib\" />
+    <file src="ExceptionReporter\bin\Release\AzureDevOpsTools.ExceptionReporter.pdb" target="lib\" />
+  </files>
+</package>

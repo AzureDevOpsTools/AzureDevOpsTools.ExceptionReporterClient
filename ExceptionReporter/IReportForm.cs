@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Osiris.Exception.Reporter
+namespace AzureDevOpsTools.ExceptionReporter
 {
 
     /// <summary>

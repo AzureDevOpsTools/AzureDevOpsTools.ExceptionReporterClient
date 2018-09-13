@@ -4,20 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
-using Kongsberg.Nemo.ExceptionReporter;
-using Kongsberg.Nemo.ExceptionReporter.TFSExceptionService;
 using log4net;
 using log4net.Repository.Hierarchy;
 using System.Xml;
 using log4net.Config;
 using System.Reflection;
-using Kongsberg.Nemo.ExceptionReporter.Properties;
+using AzureDevOpsTools.ExceptionReporter.Properties;
 
-namespace Inmeta.Exception.Reporter
+namespace AzureDevOpsTools.ExceptionReporter
 {
     /// <summary>
     /// The setup below will use the FilePatternConverter to find the location to store the files.  This will be the %ProgramData% folder for the current machine
-    /// and we add Kongsberg/ExceptionReporter to that path. 
     /// </summary>
     internal static class ReportLogger
     {
@@ -32,7 +29,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <file type=""log4net.Util.PatternString"">" + Environment.NewLine +
                                     @"        <converter>" + Environment.NewLine +
                                     @"          <name value=""folder""/>" + Environment.NewLine +
-                                    @"          <type value=""Kongsberg.Nemo.ExceptionReporter.FilePatternConverter,Kongsberg.Nemo.ExceptionReporter"" />" + Environment.NewLine +
+                                    @"          <type value=""AzureDevOpsTools.ExceptionReporter.FilePatternConverter,AzureDevOpsTools.ExceptionReporter"" />" + Environment.NewLine +
                                     @"        </converter>" + Environment.NewLine +
                                     @"        <conversionPattern value=""%folder\XMLExceptionReporter.log"" />" + Environment.NewLine +
                                     @"      </file>" + Environment.NewLine +
@@ -49,7 +46,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <file type=""log4net.Util.PatternString"">" + Environment.NewLine +
                                     @"        <converter>" + Environment.NewLine +
                                     @"          <name value=""folder""/>" + Environment.NewLine +
-                                    @"          <type value=""Kongsberg.Nemo.ExceptionReporter.FilePatternConverter,Kongsberg.Nemo.ExceptionReporter"" />" + Environment.NewLine +
+                                    @"          <type value=""AzureDevOpsTools.ExceptionReporter.FilePatternConverter,AzureDevOpsTools.ExceptionReporter"" />" + Environment.NewLine +
                                     @"        </converter>" + Environment.NewLine +
                                     @"        <conversionPattern value=""%folder\ExceptionReporter.log"" />" + Environment.NewLine +
                                     @"      </file>" + Environment.NewLine +
@@ -66,7 +63,7 @@ namespace Inmeta.Exception.Reporter
                                     @"      <file type=""log4net.Util.PatternString"">" + Environment.NewLine +
                                     @"        <converter>" + Environment.NewLine +
                                     @"          <name value=""folder""/>" + Environment.NewLine +
-                                    @"          <type value=""Kongsberg.Nemo.ExceptionReporter.FilePatternConverter,Kongsberg.Nemo.ExceptionReporter"" />" + Environment.NewLine +
+                                    @"          <type value=""AzureDevOpsTools.ExceptionReporter.FilePatternConverter,AzureDevOpsTools.ExceptionReporter"" />" + Environment.NewLine +
                                     @"        </converter>" + Environment.NewLine +
                                     @"        <conversionPattern value=""%folder\ExceptionReporterFailedDelivery.log"" />" + Environment.NewLine +
                                     @"      </file>" + Environment.NewLine +

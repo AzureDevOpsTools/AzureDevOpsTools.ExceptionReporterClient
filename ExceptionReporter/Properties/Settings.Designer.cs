@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Kongsberg.Nemo.ExceptionReporter.Properties {
+namespace AzureDevOpsTools.ExceptionReporter.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -34,7 +34,7 @@ namespace Kongsberg.Nemo.ExceptionReporter.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Inmeta.Exception.ReportUI.WinForm.ReportForm, Kongsberg.Nemo.ExceptionReporter")]
+        [global::System.Configuration.DefaultSettingValueAttribute("AzureDevOpsTools.Exception.ReportUI.WinForm.ReportForm, AzureDevOpsTools.ExceptionReporter")]
         public string ReportingFormType {
             get {
                 return ((string)(this["ReportingFormType"]));
@@ -53,10 +53,10 @@ namespace Kongsberg.Nemo.ExceptionReporter.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://exceptions.km.kongsberg.com/web/service.asmx")]
-        public string Kongsberg_Nemo_Exception_Reporter_TFSExceptionService_Service {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://exceptionreporter.azurewebsites.net/api/exceptions")]
+        public string AzureDevOpsTools_Exception_Reporter_TFSExceptionService_Service {
             get {
-                return ((string)(this["Kongsberg_Nemo_Exception_Reporter_TFSExceptionService_Service"]));
+                return ((string)(this["AzureDevOpsTools_Exception_Reporter_TFSExceptionService_Service"]));
             }
         }
     }

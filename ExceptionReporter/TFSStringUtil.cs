@@ -1,4 +1,4 @@
-﻿namespace Inmeta.Exception.Common
+﻿namespace AzureDevOpsTools.Exception.Common
 {
     internal static class TFSStringUtil
     {

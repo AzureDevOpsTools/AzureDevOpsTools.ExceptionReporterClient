@@ -2,18 +2,16 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Windows;
-using Inmeta.Exception.Reporter;
-using Inmeta.Exception.ReportUI.WPF;
-using Osiris.Exception.Reporter;
+using AzureDevOpsTools.ExceptionReporter;
+using AzureDevOpsTools.Exception.ReportUI.WPF;
 
-namespace Kongsberg.Nemo.ExceptionReporter
+namespace AzureDevOpsTools.ExceptionReporter
 {
     /// <summary>
     /// Use to enable registration of handler
@@ -21,7 +19,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
     public static class ExceptionRegistrator
     {
         //store previous exception to avoid recursive reporting
-        private static Exception _previousException;
+        private static System.Exception _previousException;
 
         internal static bool _tryContinueAfterException = true;
         internal static bool _showExitAppWindow = true;
@@ -41,7 +39,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
         internal static string ApplicationName { get; set; }
 
         /// <summary>
-        ///     Get Reporter, SAME AS NEMO, but more robust.
         /// </summary>
         internal static string Reporter
         {
@@ -49,7 +46,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
             {
                 try
                 {
-                    //same as NEMO, but with exception handling.
                     var currentNtUser = WindowsIdentity.GetCurrent();
                     string customer = string.IsNullOrEmpty(CustomerName) ? "" : CustomerName + "\\";
                     string user = currentNtUser != null ? currentNtUser.Name : "n/a";
@@ -69,7 +65,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
         }
 
         /// <summary>
-        ///     Get VERSION, SAME AS NEMO, but more robust.
         /// </summary>
         public static string Version
         {
@@ -78,22 +73,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 string version;
                 try
                 {
-                    //SAME AS NEMO, but with exception handling
-                    //version = Assembly.GetCallingAssembly().GetName().Version.ToString();
-
-
-                    var callingassemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-                    var filtered = callingassemblies.Where(
-                                a => !a.FullName.Contains("ExceptionReporter") && a.FullName.Contains("Kongsberg")).ToList();
-                    var usables = filtered.Where(a => a.GetName().Version.ToString() != "1.0.0.0").ToList();
-                    if (!usables.Any())
-                        version = "1.0.0.0";
-                    else
-                    {
-                        version = usables.First().GetName().Version.ToString();
-                    }
+                    version = Assembly.GetCallingAssembly().GetName().Version.ToString();
                 }
-                catch (Exception privEx)
+                catch (System.Exception privEx)
                 {
                     version =
                         "Insufficient privileges to extract the correct assembly version";
@@ -108,7 +90,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// <summary>
         ///     The exception being reported.
         /// </summary>
-        private static Exception TheException { get; set; }
+        private static System.Exception TheException { get; set; }
 
         /// <summary>
         /// Customers name
@@ -130,8 +112,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             _form = new ReportForm();
             _form.RegisterExceptionEvents(OnException);
 
-            //For nemo allways use K-Sim.
-            ApplicationName = "KongsbergNemo";
+            ApplicationName = "AzureDevOpsTools.TestApp";
         }
 
         /// <summary>
@@ -150,13 +131,12 @@ namespace Kongsberg.Nemo.ExceptionReporter
             _form = new ReportForm();
             _form.RegisterWindowsFormsExceptionEvents(OnException);
 
-            //For nemo allways use K-Sim.
-            ApplicationName = "KongsbergNemo";
+            ApplicationName = "AzureDevOpsTools.TestApp";
         }
 
 
         /// <summary>
-        ///     Call this to register the exception trapper when you have a diffent application name than the default "Kongsberg.Nemo"
+        ///     Call this to register the exception trapper when you have a diffent application name than the default "AzureDevOpsTools"
         ///     This function should be the first function called in your application, it MUST be called before any forms are
         ///     created.
         ///     Good  practice is to call it before Application.Run().
@@ -179,7 +159,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        internal static bool OnException(Exception e, bool isTerminating)
+        internal static bool OnException(System.Exception e, bool isTerminating)
         {
             ExceptionReporting?.Invoke(e, EventArgs.Empty);
             var proc = Process.GetCurrentProcess();
@@ -200,7 +180,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
             ReportLogger.LogInfo("Received exception  (isTerminating = " + isTerminating + ")");
 
-            //set the excpetion, SAME as NEMO (private static field excpetion)
             TheException = e;
 
             try
@@ -223,26 +202,22 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 //only report one exception at the time.
                 lock (_syncObject)
                 {
-                    //Same as NEMO project:
                     string errorText = CreateExceptionText(e);
 
                     //show the error to the user and collect a description of the error from the user.
                     try
                     {
                         //show the exception using the registered IReportForm.
-                        //provide the text to display: Same as NEMO project, but now the form is not part of this assembly so we generate it and provide it to the form.
-                        //again same as NEMO project.
                         //if return value is false -> cancel
                         if (!_form.ShowException(errorText,
                             //this callback is to be used when the form click on the Send button.    
-                            //same as NEMO btnPost_Click
                             DoPost))
                         {
                             //cancel report exception to log
                             LogToFile(e);
                         }
                     }
-                    catch (Exception ex)
+                    catch (System.Exception ex)
                     {
                         //log report exception 
                         var report = new TFSExceptionReport(ApplicationName, Reporter, Reporter, e, Version,
@@ -301,7 +276,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// <param name="version"></param>
         /// <param name="applicationName"></param>
         /// <param name="e"></param>
-        internal static void ReportExceptionWithNoGUI(string currentNtUser, string version, string applicationName, Exception e)
+        internal static void ReportExceptionWithNoGUI(string currentNtUser, string version, string applicationName, System.Exception e)
         {
             try
             {
@@ -317,12 +292,11 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
                 ReportLogger.LogToFile(report);
 
-                //same as NEMO
                 report.Post();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                ReportLogger.LogExceptionsDuringDelivery(new Exception("Failed to deliver exception (no GUI)", ex));
+                ReportLogger.LogExceptionsDuringDelivery(new System.Exception("Failed to deliver exception (no GUI)", ex));
             }
         }
 
@@ -332,7 +306,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         }
 
 
-        private static void LogToFile(Exception e)
+        private static void LogToFile(System.Exception e)
         {
             var report = new TFSExceptionReport(ApplicationName, Reporter, Reporter, e, Version,
                 "Exception reported w/o description");
@@ -340,7 +314,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             ReportLogger.LogToFile(report);
         }
 
-        public static void ReportInSTA(Exception e, bool isTerminating)
+        public static void ReportInSTA(System.Exception e, bool isTerminating)
         {
             ReportLogger.LogInfo("Need to spawn own STA thread.");
             var staReportFormThread = new Thread(() => OnException(e, isTerminating));
@@ -356,7 +330,6 @@ namespace Kongsberg.Nemo.ExceptionReporter
             try
             {
                 //create exception entity
-                //Same as NEMO:
                 var report = new TFSExceptionReport
                     (
                     ApplicationName,
@@ -383,7 +356,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                         //failed to deliver exception display for user.
                         _form.ShowDeliveryFailure(result.Message, result);
                     }
-                    catch (Exception ex)
+                    catch (System.Exception ex)
                     {
                         //failed to show delivery failure... just log 
                         ReportLogger.LogExceptionsDuringDelivery(
@@ -391,7 +364,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 ReportLogger.LogExceptionsDuringDelivery(
                     new FileLoadException("Exception during TFS exception report create or post", ex));
@@ -408,9 +381,8 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
         /// <summary>
         ///     Creates a string formed by exception and inner exceptions.
-        ///     This code is the same as from Nemo project, but more robust.
         /// </summary>
-        internal static string CreateExceptionText(Exception e)
+        internal static string CreateExceptionText(System.Exception e)
         {
             var errorText = new StringBuilder();
             errorText.Append(FormStringFromException(e));
@@ -432,7 +404,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return errorText.ToString();
         }
 
-        private static string FormStringFromException(Exception ex)
+        private static string FormStringFromException(System.Exception ex)
         {
             string name = ex.GetType().Name;
 
@@ -443,9 +415,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
                 $"Application: {Assembly.GetEntryAssembly().GetName().Name}\nException message: {ex.Message}\nType: {ex.GetType()}\n{ex.StackTrace ?? String.Empty}";
         }
 
-        public static Exception GetMostInnerException(Exception e)
+        public static System.Exception GetMostInnerException(System.Exception e)
         {
-            Exception temp = e;
+            System.Exception temp = e;
 
             while (temp.InnerException != null)
                 temp = temp.InnerException;

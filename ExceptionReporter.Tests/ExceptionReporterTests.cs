@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using Inmeta.Exception.ReportUI.WPF;
-using Kongsberg.Nemo.ExceptionReporter;
+using AzureDevOpsTools.Exception.ReportUI.WPF;
+using AzureDevOpsTools.ExceptionReporter;
 using NUnit.Framework;
 
 namespace ExceptionReporter.Tests

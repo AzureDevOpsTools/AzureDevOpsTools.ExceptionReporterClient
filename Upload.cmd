@@ -1,1 +1,0 @@
-nuget push package\Kongsberg.Digital.ExceptionReporter.%1.nupkg     -s "http://nugetsim/NuGetSim" vol5ga5

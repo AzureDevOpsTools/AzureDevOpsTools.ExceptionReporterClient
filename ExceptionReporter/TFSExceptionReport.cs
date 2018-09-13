@@ -2,12 +2,9 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
-using Inmeta.Exception.Common;
-using Inmeta.Exception.Reporter;
-using Kongsberg.Nemo.ExceptionReporter.TFSExceptionService;
-using Osiris.Exception.Reporter;
+using AzureDevOpsTools.Exception.Common;
 
-namespace Kongsberg.Nemo.ExceptionReporter
+namespace AzureDevOpsTools.ExceptionReporter
 {
     /// <summary>
     /// This class allows you to post exception reports over the internet.
@@ -26,7 +23,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// <param name="ex"></param>
         /// <param name="version"></param>
         /// <param name="description">Step to reproduce the error.</param>
-        public TFSExceptionReport(string applicationName, string reporter, string username, Exception ex, string version, string description)
+        public TFSExceptionReport(string applicationName, string reporter, string username, System.Exception ex, string version, string description)
         {
             //ensure contracts.
             Contract.Requires(String.IsNullOrEmpty(applicationName));
@@ -52,9 +49,9 @@ namespace Kongsberg.Nemo.ExceptionReporter
                                        Reporter = reporter,
                                        Username = username,
                                        Version = version,
-                                       TheSource = ex.Source ?? String.Empty,
-                                       TheClass = exceptionClass,
-                                       TheMethod = exceptionMethod,
+                                       ExceptionSource = ex.Source ?? String.Empty,
+                                        ExceptionClass = exceptionClass,
+                ExceptionMethod = exceptionMethod,
                                        StackTrace = stackTrace,
                                        Comment = description,
                                        ExceptionMessage = message,
@@ -64,7 +61,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
 
         }
 
-        private static string GetExceptionMethod(Exception ex)
+        private static string GetExceptionMethod(System.Exception ex)
         {
             string exceptionMethod;
             try
@@ -79,7 +76,7 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return exceptionMethod;
         }
 
-        private static string GetExceptionClass(Exception ex)
+        private static string GetExceptionClass(System.Exception ex)
         {
             string exceptionClass;
             try
@@ -95,27 +92,22 @@ namespace Kongsberg.Nemo.ExceptionReporter
             return exceptionClass;
         }
 
-        private static string GetTitle(Exception ex)
+        private static string GetTitle(System.Exception ex)
         {
             var innerEx = ExceptionRegistrator.GetMostInnerException(ex);
             var splittedTitle = innerEx.StackTrace.Split(
                 new[] { " in " }, StringSplitOptions.RemoveEmptyEntries).First().Trim().Split(
                     new[] { " at " }, StringSplitOptions.RemoveEmptyEntries);
 
-            var title = GetFirstKongsbergLine(splittedTitle).Trim().Split(
+            var title = GetFirstLine(splittedTitle).Trim().Split(
                         new[] { "(" }, StringSplitOptions.RemoveEmptyEntries).First().Trim();
             title = innerEx.Message.Trim('.') + (title.Trim().StartsWith("at") ? " " : " at ") + title.Trim();
             title = TFSStringUtil.GenerateValidTFSStringType(title);
             return title;
         }
 
-        private static string GetFirstKongsbergLine(string[] splittedTitle)
+        private static string GetFirstLine(string[] splittedTitle)
         {
-            foreach (var line in splittedTitle)
-            {
-                if (line.Trim().ToLower().Contains("kongsberg"))
-                    return line;
-            }
 
             return splittedTitle.First();
         }
@@ -125,26 +117,17 @@ namespace Kongsberg.Nemo.ExceptionReporter
         /// </summary>
         /// <returns>If Post fails to deliver the report, the reason is represented in the returning exception. If success return value is null</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        internal Exception Post()
+        internal System.Exception Post()
         {
             try
             {
                 // Check for settings overrides
                 var serviceUrl = ServiceSettings.ServiceUrl.OriginalString.ToLower();
 
-                //if empty ServiceURL do not even try to post to service.
-                if (String.IsNullOrEmpty(serviceUrl) || serviceUrl == "none")
-                    return null;
+                //TODO: CAll service here
 
-                //I KM så bruker man ikke credentials.
-
-                using (var client = new Service())
-                {
-                    client.Url = serviceUrl;
-                    client.AddNewApplicationException(ExceptionEntity);
-                }
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 ReportLogger.LogExceptionsDuringDelivery(e);
 

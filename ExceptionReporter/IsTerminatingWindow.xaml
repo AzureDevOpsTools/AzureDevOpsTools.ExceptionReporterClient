@@ -1,4 +1,4 @@
-﻿<Window x:Class="Kongsberg.Nemo.ExceptionReporter.IsTerminatingWindow"
+﻿<Window x:Class="AzureDevOpsTools.ExceptionReporter.IsTerminatingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Application Terminate" Height="131" Width="465" IsEnabled="False" Topmost="True" ResizeMode="NoResize" OverridesDefaultStyle="False" Name="IsTerminating">

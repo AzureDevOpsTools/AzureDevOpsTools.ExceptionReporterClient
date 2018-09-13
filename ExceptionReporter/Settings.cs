@@ -1,4 +1,4 @@
-﻿//namespace Kongsberg.Nemo.ExceptionReporter.Properties {
+﻿//namespace AzureDevOpsTools.ExceptionReporter.Properties {
     
     
 //    // This class allows you to handle specific events on the settings class:

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Kongsberg.Nemo.ExceptionReporter.Properties {
+namespace AzureDevOpsTools.ExceptionReporter.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Kongsberg.Nemo.ExceptionReporter.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kongsberg.Nemo.ExceptionReporter.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AzureDevOpsTools.ExceptionReporter.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

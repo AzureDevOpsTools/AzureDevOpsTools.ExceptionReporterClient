@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Osiris.Exception.Reporter
+namespace AzureDevOpsTools.ExceptionReporter
 {
     /// <summary>
     /// 
@@ -13,6 +13,6 @@ namespace Osiris.Exception.Reporter
     /// </summary>
     public static class ServiceSettings
     {
-        public static Uri ServiceUrl { get; set; } = new Uri("http://exceptions.km.kongsberg.com/web/service.asmx");
+        public static Uri ServiceUrl { get; set; } = new Uri("https://exceptionreporter.azurewebsites.net/api/exceptions");
     }
 }
